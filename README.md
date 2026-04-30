@@ -194,12 +194,6 @@ YOLO11n-pose weights trained on 3,535 manually annotated honeybee instances acro
 
 **Download:** https://drive.google.com/drive/folders/1Jwxrdot9pSg63l6OPYQKcUpMNiBeGo_m?usp=sharing
 
-After downloading, place the `.pt` file in `weights/` so the path resolves to:
-
-```
-weights/beevision_yolo11n_pose.pt
-```
-
 ### 2. Training Dataset
 
 **Download:** https://drive.google.com/drive/folders/1yyn6zrlAe2xXj5S0ceutEPtbt06XrBDD?usp=sharing
