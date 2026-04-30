@@ -1,0 +1,10 @@
+ultralytics
+torch
+torchvision
+opencv-contrib-python
+numpy
+scipy
+matplotlib
+PyQt6
+cupy-cuda12x
+numba
