@@ -72,25 +72,25 @@ BeeVision/
 │
 ├── weights/                           ← place trained .pt model here (download below)
 ├── dataset/                           ← training + evaluation data (download below)
-│   ├── training/                      ← 3,535 instances for retraining
-│   └── evaluation/                    ← 2,646 instances for paper Tables 1–3
+│   ├── training/                      
+│   └── evaluation/                   
 │
-├── test_videos/                       ← short demo clips (download below)
+├── test_videos/                       
 │
-├── results/                           ← qualitative outputs from the paper figures
-│   ├── Single Bee/                    ← Fig. 12 A–F
+├── results/                           
+│   ├── Single Bee/                    
 │   ├── Single Bee Qualitative/
-│   ├── Multibee/                      ← Fig. 12 G–J
-│   ├── LR RL/                         ← Fig. 12 K–N (cross-pattern contact)
-│   ├── RR/                            ← Fig. 12 O–R (right–right contact)
-│   ├── LL/                            ← Fig. 12 S–V (left–left contact)
-│   ├── Trophallaxis/                  ← Fig. 12 W–Z (food transfer event)
-│   ├── Head Contact/                  ← Fig. 13 A–E (Tier 3 anterior region)
-│   ├── Thorax Abdomen Contact/        ← Fig. 13 F–J (Tier 3 posterior regions)
-│   ├── Drone Qualitative/             ← Fig. 13 L (cross-caste, drone)
-│   └── Full frame Qualitative/        ← Fig. 13 N (crowded colony scene)
+│   ├── Multibee/                      
+│   ├── LR RL/                         
+│   ├── RR/                           
+│   ├── LL/                            
+│   ├── Trophallaxis/                 
+│   ├── Head Contact/                  
+│   ├── Thorax Abdomen Contact/        
+│   ├── Drone Qualitative/             
+│   └── Full frame Qualitative/        
 │
-└── gifs/                              ← animated demonstrations of each capability
+└── gifs/                              
 ```
 
 ---
@@ -602,7 +602,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## Contact
 
-**Shoaib Ahmmad** — `shoaib.ahmmad@ndsu.edu`
+**Shoaib Ahmmad** — `shoaib.ahmmad@ndus.edu`
 PhD Student, Department of Agricultural and Biosystems Engineering
 North Dakota State University, Fargo, ND 58108, USA
 
