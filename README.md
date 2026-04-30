@@ -91,16 +91,7 @@ BeeVision/
 │   └── Full frame Qualitative/
 │
 └── gifs/
-    ├── 01_single_bee.gif
-    ├── 02_multibee.gif
-    ├── 03_full_frame.gif
-    ├── 04_RR_contact.gif
-    ├── 05_LL_contact.gif
-    ├── 06_LR_RL_cross.gif
-    ├── 07_head_contact.gif
-    ├── 08_thorax_abdomen_contact.gif
-    ├── 09_trophallaxis.gif
-    └── 10_drone_queen.gif
+
 ```
 
 ---
