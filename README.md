@@ -2,9 +2,31 @@
 
 **A Morphology-Guided Two-Stage Pipeline for Real-Time Bilateral Antenna Keypoint Tracking and Behavioral Analysis in Free-Moving Honeybees**
 
+---
+
+## Demo Videos
+
 <p align="center">
-  <video src="demo_videos/1.mp4" autoplay loop muted playsinline width="80%"></video>
+  <video src="https://raw.githubusercontent.com/shoaibniloy/BeeVision-Antenna-Analysis/main/demo_videos/1.mp4" autoplay loop muted playsinline width="80%"></video>
 </p>
+
+<p align="center">
+  <video src="https://raw.githubusercontent.com/shoaibniloy/BeeVision-Antenna-Analysis/main/demo_videos/2.mp4" autoplay loop muted playsinline width="80%"></video>
+</p>
+
+<p align="center">
+  <video src="https://raw.githubusercontent.com/shoaibniloy/BeeVision-Antenna-Analysis/main/demo_videos/3.mp4" autoplay loop muted playsinline width="80%"></video>
+</p>
+
+<p align="center">
+  <video src="https://raw.githubusercontent.com/shoaibniloy/BeeVision-Antenna-Analysis/main/demo_videos/4.mp4" autoplay loop muted playsinline width="80%"></video>
+</p>
+
+<p align="center">
+  <video src="https://raw.githubusercontent.com/shoaibniloy/BeeVision-Antenna-Analysis/main/demo_videos/5.mp4" autoplay loop muted playsinline width="80%"></video>
+</p>
+
+---
 
 BeeVision is the first system to achieve real-time bilateral antenna keypoint tracking in free-moving, unmarked honeybees within living observation hives. By combining a custom-trained YOLO11n-pose model for body keypoints with a dedicated morphological refinement stage for antenna localization, BeeVision closes the 89 percentage-point train-deploy gap that has structurally prevented sub-pixel-width antenna tracking in standard heatmap-based pose estimation frameworks.
 
@@ -45,10 +67,6 @@ BeeVision is the first system to achieve real-time bilateral antenna keypoint tr
 | Real-time throughput | — | **≥15 fps up to 14 bees** | — |
 
 Evaluated on 2,646 instances spanning workers, queens, and drones. Long-duration stability validated over 60 continuous minutes with 52 unique bees and zero statistical drift in any accuracy or resource metric.
-
-<p align="center">
-  <video src="demo_videos/2.mp4" autoplay loop muted playsinline width="80%"></video>
-</p>
 
 ---
 
@@ -264,10 +282,6 @@ Images are read in lexicographic filename order. This is how the paper's 500 fps
 
 BeeVision is a three-stage cascade running on every frame independently per detected bee.
 
-<p align="center">
-  <video src="demo_videos/3.mp4" autoplay loop muted playsinline width="80%"></video>
-</p>
-
 ### Stage 1 — YOLO11n-pose detection
 
 A custom-trained CSPDarkNet + FPN backbone (YOLO11n-pose) detects nine anatomical keypoints per bee:
@@ -314,10 +328,6 @@ Confidence is updated asymmetrically: `+0.02` per pass, `−0.30` per validation
 
 Beyond keypoint tracking, BeeVision extracts a comprehensive behavioral metrics suite directly from the geometric configuration of tracked keypoints — no learned classifier is required, and every event is visually verifiable.
 
-<p align="center">
-  <video src="demo_videos/4.mp4" autoplay loop muted playsinline width="80%"></video>
-</p>
-
 ### Directional contact patterns
 
 For every bee pair (A, B), antenna contacts are classified into four directional patterns based on which antenna of each bee is involved:
@@ -357,10 +367,6 @@ Identical pipeline parameters track all three colony castes. Performance on the 
 | Drone | Dorsal | 5,345 | 14.1 px | 70.7% |
 
 The drone gap reflects training data volume (202 instances vs. 2,897 worker instances), not morphological dissimilarity — additional drone annotations close the gap directly.
-
-<p align="center">
-  <video src="demo_videos/5.mp4" autoplay loop muted playsinline width="80%"></video>
-</p>
 
 ---
 
@@ -557,8 +563,13 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ## Contact
 
 **Shoaib Ahmmad** — `shoaib.ahmmad@ndus.edu`
-PhD Student, Department of Agricultural and Biosystems Engineering
+Department of Agricultural and Biosystems Engineering
+North Dakota State University, Fargo, ND 58108, USA
+
+**Jewel Woodcock** — `jewel.woodcock@ndsu.edu`
+Department of Agricultural and Biosystems Engineering
 North Dakota State University, Fargo, ND 58108, USA
 
 **Dr. Sulaymon L. Eshkabilov** (corresponding author) — `sulaymon.eshkabilov@ndsu.edu`
-Principal Investigator, Agrimechatronics Lab, Department of Agricultural and Biosystems Engineering, NDSU
+Principal Investigator, Agrimechatronics Lab, Department of Agricultural and Biosystems Engineering
+North Dakota State University, Fargo, ND 58108, USA
