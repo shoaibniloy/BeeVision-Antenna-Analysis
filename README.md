@@ -72,25 +72,35 @@ BeeVision/
 │
 ├── weights/                           ← place trained .pt model here (download below)
 ├── dataset/                           ← training + evaluation data (download below)
-│   ├── training/                      
-│   └── evaluation/                   
+│   ├── training/
+│   └── evaluation/
 │
-├── test_videos/                       
+├── test_videos/
 │
-├── results/                           
-│   ├── Single Bee/                    
+├── results/
+│   ├── Single Bee/
 │   ├── Single Bee Qualitative/
-│   ├── Multibee/                      
-│   ├── LR RL/                         
-│   ├── RR/                           
-│   ├── LL/                            
-│   ├── Trophallaxis/                 
-│   ├── Head Contact/                  
-│   ├── Thorax Abdomen Contact/        
-│   ├── Drone Qualitative/             
-│   └── Full frame Qualitative/        
+│   ├── Multibee/
+│   ├── LR RL/
+│   ├── RR/
+│   ├── LL/
+│   ├── Trophallaxis/
+│   ├── Head Contact/
+│   ├── Thorax Abdomen Contact/
+│   ├── Drone Qualitative/
+│   └── Full frame Qualitative/
 │
-└── gifs/                              
+└── gifs/
+    ├── 01_single_bee.gif
+    ├── 02_multibee.gif
+    ├── 03_full_frame.gif
+    ├── 04_RR_contact.gif
+    ├── 05_LL_contact.gif
+    ├── 06_LR_RL_cross.gif
+    ├── 07_head_contact.gif
+    ├── 08_thorax_abdomen_contact.gif
+    ├── 09_trophallaxis.gif
+    └── 10_drone_queen.gif
 ```
 
 ---
@@ -201,42 +211,15 @@ weights/beevision_yolo11n_pose.pt
 
 ### 2. Training Dataset
 
-3,535 manually annotated instances in COCO format, used to train the YOLO11n-pose backbone. Splits: workers and drones partitioned 645 / 177 / 91 (train / valid / test); queens partitioned 305 / 87 / 44.
-
 **Download:** https://drive.google.com/drive/folders/1yyn6zrlAe2xXj5S0ceutEPtbt06XrBDD?usp=sharing
-
-Extract into `dataset/training/`:
-
-```
-dataset/training/
-├── train/
-│   ├── images/
-│   └── _annotations.coco.json
-├── valid/
-│   ├── images/
-│   └── _annotations.coco.json
-└── test/
-    ├── images/
-    └── _annotations.coco.json
-```
 
 ### 3. Evaluation Dataset
 
-The held-out evaluation set used to compute Tables 1, 2, and 3 in the paper. 2,646 instances spanning workers (1,302), drones (1,140), and queens (204), yielding 10,584 antenna keypoint annotations.
-
 **Download:** https://drive.google.com/drive/folders/1cyQv3DHgzcmMGbtvgJodotjqgOLdqwUp?usp=sharing
-
-Extract into `dataset/evaluation/`.
 
 ### 4. Test Videos
 
-Short, unannotated demonstration clips for runnable validation of the pipeline.
-
 **Download:** https://drive.google.com/drive/folders/1gc34X0bcShafH4pRDbm8Y2gpA5jVM7nP?usp=sharing
-
-Extract into `test_videos/`. These clips are recorded under the same conditions as the training dataset (Phantom VRI-MIRO-C321-16GB-M at 500 fps, 94 cm working distance, downsampled to 640×480).
-
-> **Note:** Test videos are **unannotated** demonstration clips intended for end-to-end pipeline validation only. To reproduce paper metrics (Tables 1–3), use the held-out evaluation dataset (download #3) via the GUI's Evaluation tab.
 
 ---
 
@@ -432,10 +415,6 @@ yolo pose train \
   name=beevision
 ```
 
-Hyperparameters match the paper (Section 2.2.3). Training in the paper converged at epoch 401 (validation plateau, early stopping). Final pose mAP@0.5 = 0.988, box mAP@0.5 = 0.986. Best weights are written to `runs/train/beevision/weights/best.pt`.
-
-The dataset uses the 9-keypoint schema with `flip_idx = [0, 3, 4, 1, 2, 7, 8, 5, 6]` so that horizontal-flip augmentation correctly swaps left/right anatomical pairs (k1↔k3, k5↔k7, k6↔k8).
-
 ---
 
 ## Reproducing Paper Results
@@ -602,9 +581,10 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## Contact
 
-**Shoaib Ahmmad** — `shoaib.ahmmad@ndus.edu`
+**Shoaib Ahmmad** — `shoaib.ahmmad@ndsu.edu`
 PhD Student, Department of Agricultural and Biosystems Engineering
 North Dakota State University, Fargo, ND 58108, USA
 
 **Dr. Sulaymon L. Eshkabilov** (corresponding author) — `sulaymon.eshkabilov@ndsu.edu`
-Principle Investigator, Agrimechatronics Lab, Department of Agricultural and Biosystems Engineering, NDSU
+Principal Investigator, Agrimechatronics Lab
+Assistant Professor, Department of Agricultural and Biosystems Engineering, NDSU
