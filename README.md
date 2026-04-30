@@ -3,8 +3,7 @@
 **A Morphology-Guided Two-Stage Pipeline for Real-Time Bilateral Antenna Keypoint Tracking and Behavioral Analysis in Free-Moving Honeybees**
 
 <p align="center">
-  <img src="gifs/01_single_bee.gif" width="45%" alt="Single bee tracking" />
-  <img src="gifs/02_multibee.gif" width="45%" alt="Multi-bee tracking" />
+  <video src="demo_videos/1.mp4" autoplay loop muted playsinline width="80%"></video>
 </p>
 
 BeeVision is the first system to achieve real-time bilateral antenna keypoint tracking in free-moving, unmarked honeybees within living observation hives. By combining a custom-trained YOLO11n-pose model for body keypoints with a dedicated morphological refinement stage for antenna localization, BeeVision closes the 89 percentage-point train-deploy gap that has structurally prevented sub-pixel-width antenna tracking in standard heatmap-based pose estimation frameworks.
@@ -47,6 +46,10 @@ BeeVision is the first system to achieve real-time bilateral antenna keypoint tr
 
 Evaluated on 2,646 instances spanning workers, queens, and drones. Long-duration stability validated over 60 continuous minutes with 52 unique bees and zero statistical drift in any accuracy or resource metric.
 
+<p align="center">
+  <video src="demo_videos/2.mp4" autoplay loop muted playsinline width="80%"></video>
+</p>
+
 ---
 
 ## Why BeeVision
@@ -75,23 +78,27 @@ BeeVision/
 │   ├── training/
 │   └── evaluation/
 │
-├── test_videos/
+├── test_videos/                       ← runnable demo footage (download below)
 │
-├── results/
-│   ├── Single Bee/
-│   ├── Single Bee Qualitative/
-│   ├── Multibee/
-│   ├── LR RL/
-│   ├── RR/
-│   ├── LL/
-│   ├── Trophallaxis/
-│   ├── Head Contact/
-│   ├── Thorax Abdomen Contact/
-│   ├── Drone Qualitative/
-│   └── Full frame Qualitative/
+├── demo_videos/                       ← short demonstration clips shown in this README
+│   ├── 1.mp4
+│   ├── 2.mp4
+│   ├── 3.mp4
+│   ├── 4.mp4
+│   └── 5.mp4
 │
-└── gifs/
-
+└── results/                           ← qualitative outputs from the paper figures
+    ├── Single Bee/
+    ├── Single Bee Qualitative/
+    ├── Multibee/
+    ├── LR RL/
+    ├── RR/
+    ├── LL/
+    ├── Trophallaxis/
+    ├── Head Contact/
+    ├── Thorax Abdomen Contact/
+    ├── Drone Qualitative/
+    └── Full frame Qualitative/
 ```
 
 ---
@@ -129,42 +136,30 @@ Switch between the tabs (Pose Estimation, Darkest Pixels, ROI + BBox + Body, For
 - **CUDA** 11.8+ (optional, for GPU acceleration — strongly recommended)
 - **OS** Linux (tested on Ubuntu 22.04), Windows 10/11, macOS 12+
 
-### Core dependencies
+### Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-The core requirements include:
+The `requirements.txt` file lists every package required by the pipeline:
 
 ```
-torch>=2.0
-ultralytics>=8.0.196
-opencv-contrib-python>=4.8.0    # contrib build is required for cv2.ximgproc
-PyQt6>=6.5
-numpy>=1.24
-scipy>=1.10
-matplotlib>=3.7
+ultralytics
+torch
+torchvision
+opencv-contrib-python
+numpy
+scipy
+matplotlib
+PyQt6
+cupy-cuda12x
+numba
 ```
 
-> **Important:** Use `opencv-contrib-python`, not the base `opencv-python`. BeeVision uses `cv2.ximgproc.thinning` for fast Zhang-Suen skeletonization, which is only available in the contrib build. The script falls back to a slower vectorized NumPy implementation if `ximgproc` is unavailable, but the contrib build is recommended for real-time performance.
+> **Important:** The OpenCV package must be `opencv-contrib-python`, not the base `opencv-python`. BeeVision uses `cv2.ximgproc.thinning` for fast Zhang-Suen skeletonization, which is only available in the contrib build. The script falls back to a slower vectorized NumPy implementation if `ximgproc` is unavailable, but the contrib build is recommended for real-time performance.
 
-### Optional acceleration
-
-For maximum throughput on CUDA-equipped systems, install the optional acceleration dependencies:
-
-```bash
-pip install -r requirements-optional.txt
-```
-
-Optional dependencies:
-
-```
-cupy-cuda12x>=12.0    # GPU-accelerated NumPy operations
-numba>=0.58           # JIT compilation for triangle-membership tests
-```
-
-The pipeline auto-detects these at import time and falls back gracefully to CPU/NumPy when they're absent.
+> **CUDA note:** The `cupy-cuda12x` line targets CUDA 12.x. If you are running CUDA 11.x, change this line in `requirements.txt` to `cupy-cuda11x`. CuPy and Numba are optional accelerators — the pipeline auto-detects them at import time and falls back gracefully to CPU/NumPy when absent.
 
 ### Verify your installation
 
@@ -193,6 +188,12 @@ All large assets (model weights, dataset, test videos) are hosted on Google Driv
 YOLO11n-pose weights trained on 3,535 manually annotated honeybee instances across workers, queens, and drones.
 
 **Download:** https://drive.google.com/drive/folders/1Jwxrdot9pSg63l6OPYQKcUpMNiBeGo_m?usp=sharing
+
+After downloading, place the `.pt` file in `weights/` so the path resolves to:
+
+```
+weights/beevision_yolo11n_pose.pt
+```
 
 ### 2. Training Dataset
 
@@ -264,7 +265,7 @@ Images are read in lexicographic filename order. This is how the paper's 500 fps
 BeeVision is a three-stage cascade running on every frame independently per detected bee.
 
 <p align="center">
-  <img src="gifs/03_full_frame.gif" width="80%" alt="Full pipeline running on crowded colony scene" />
+  <video src="demo_videos/3.mp4" autoplay loop muted playsinline width="80%"></video>
 </p>
 
 ### Stage 1 — YOLO11n-pose detection
@@ -313,13 +314,11 @@ Confidence is updated asymmetrically: `+0.02` per pass, `−0.30` per validation
 
 Beyond keypoint tracking, BeeVision extracts a comprehensive behavioral metrics suite directly from the geometric configuration of tracked keypoints — no learned classifier is required, and every event is visually verifiable.
 
-### Directional contact patterns
-
 <p align="center">
-  <img src="gifs/04_RR_contact.gif" width="32%" alt="RR contact" />
-  <img src="gifs/05_LL_contact.gif" width="32%" alt="LL contact" />
-  <img src="gifs/06_LR_RL_cross.gif" width="32%" alt="Cross-pattern contact" />
+  <video src="demo_videos/4.mp4" autoplay loop muted playsinline width="80%"></video>
 </p>
+
+### Directional contact patterns
 
 For every bee pair (A, B), antenna contacts are classified into four directional patterns based on which antenna of each bee is involved:
 
@@ -333,18 +332,9 @@ The **lateralization index** `LI = (RR − LL) / Total` quantifies asymmetry on 
 
 ### Regional contact detection
 
-<p align="center">
-  <img src="gifs/07_head_contact.gif" width="48%" alt="Antenna-to-head contact" />
-  <img src="gifs/08_thorax_abdomen_contact.gif" width="48%" alt="Antenna-to-posterior contact" />
-</p>
-
 Each bee's body is partitioned into four anatomical segments (prothorax, mesothorax, metathorax, abdomen). Antenna tips landing within 10 px of any segment trigger a regional contact event. Elevated prothorax contacts suggest head-focused inspection or aggression assessment; elevated abdominal contacts indicate posterior-focused interactions such as gland secretion transfer.
 
 ### Trophallaxis event detection
-
-<p align="center">
-  <img src="gifs/09_trophallaxis.gif" width="80%" alt="Trophallaxis event detection" />
-</p>
 
 Trophallaxis (mouth-to-mouth food transfer) events are confirmed when **all five conditions** are simultaneously satisfied for at least 10 seconds:
 
@@ -358,10 +348,6 @@ Confirmed events receive a quality score combining straightness, duration, and r
 
 ### Cross-caste tracking
 
-<p align="center">
-  <img src="gifs/10_drone_queen.gif" width="80%" alt="Drone and queen tracking" />
-</p>
-
 Identical pipeline parameters track all three colony castes. Performance on the evaluation set:
 
 | Caste | Orientation | n | Antenna RMSE | PCK@10 |
@@ -371,6 +357,10 @@ Identical pipeline parameters track all three colony castes. Performance on the 
 | Drone | Dorsal | 5,345 | 14.1 px | 70.7% |
 
 The drone gap reflects training data volume (202 instances vs. 2,897 worker instances), not morphological dissimilarity — additional drone annotations close the gap directly.
+
+<p align="center">
+  <video src="demo_videos/5.mp4" autoplay loop muted playsinline width="80%"></video>
+</p>
 
 ---
 
@@ -566,10 +556,9 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## Contact
 
-**Shoaib Ahmmad** — `shoaib.ahmmad@ndsu.edu`
+**Shoaib Ahmmad** — `shoaib.ahmmad@ndus.edu`
 PhD Student, Department of Agricultural and Biosystems Engineering
 North Dakota State University, Fargo, ND 58108, USA
 
 **Dr. Sulaymon L. Eshkabilov** (corresponding author) — `sulaymon.eshkabilov@ndsu.edu`
-Principal Investigator, Agrimechatronics Lab
-Assistant Professor, Department of Agricultural and Biosystems Engineering, NDSU
+Principal Investigator, Agrimechatronics Lab, Department of Agricultural and Biosystems Engineering, NDSU
