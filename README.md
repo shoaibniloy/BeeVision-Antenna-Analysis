@@ -10,9 +10,6 @@
   <img src="gif_demo/1.gif" width="80%" alt="BeeVision Demo 1"/>
 </p>
 <p align="center">
-  <img src="gif_demo/2.gif" width="80%" alt="BeeVision Demo 2"/>
-</p>
-<p align="center">
   <img src="gif_demo/5.gif" width="80%" alt="BeeVision Demo 5"/>
 </p>
 <p align="center">
