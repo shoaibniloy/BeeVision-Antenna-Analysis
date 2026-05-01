@@ -4,7 +4,7 @@
  
 ---
  
-## Demo Videos
+## Demo 
  
 <p align="center">
   <img src="gif_demo/1.gif" width="80%" alt="BeeVision Demo 1"/>
