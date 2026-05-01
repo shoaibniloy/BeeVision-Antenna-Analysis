@@ -13,41 +13,19 @@
   <img src="gif_demo/2.gif" width="80%" alt="BeeVision Demo 2"/>
 </p>
 <p align="center">
+  <img src="gif_demo/5.gif" width="80%" alt="BeeVision Demo 5"/>
+</p>
+<p align="center">
   <img src="gif_demo/3.gif" width="80%" alt="BeeVision Demo 3"/>
 </p>
 <p align="center">
   <img src="gif_demo/4.gif" width="80%" alt="BeeVision Demo 4"/>
 </p>
-<p align="center">
-  <img src="gif_demo/5.gif" width="80%" alt="BeeVision Demo 5"/>
-</p>
+
 ---
  
 BeeVision is the first system to achieve real-time bilateral antenna keypoint tracking in free-moving, unmarked honeybees within living observation hives. By combining a custom-trained YOLO11n-pose model for body keypoints with a dedicated morphological refinement stage for antenna localization, BeeVision closes the 89 percentage-point train-deploy gap that has structurally prevented sub-pixel-width antenna tracking in standard heatmap-based pose estimation frameworks.
  
----
- 
-## Table of Contents
- 
-- [Highlights](#highlights)
-- [Why BeeVision](#why-beevision)
-- [Repository Contents](#repository-contents)
-- [Quick Start](#quick-start)
-- [Installation](#installation)
-- [Downloads](#downloads)
-- [Running the Pipeline](#running-the-pipeline)
-- [Pipeline Architecture](#pipeline-architecture)
-- [Behavioral Analysis](#behavioral-analysis)
-- [Training Your Own Model](#training-your-own-model)
-- [Reproducing Paper Results](#reproducing-paper-results)
-- [Parameter Reference](#parameter-reference)
-- [Hardware Requirements](#hardware-requirements)
-- [Limitations](#limitations)
-- [Troubleshooting](#troubleshooting)
-- [Funding](#funding)
-- [License](#license)
-- [Contact](#contact)
----
  
 ## Highlights
  
@@ -74,46 +52,7 @@ BeeVision removes that constraint entirely by enabling continuous, markerless, b
  
 ---
  
-## Repository Contents
- 
-```
-BeeVision/
-│
-├── README.md                          ← you are here
-├── LICENSE                            ← MIT
-│
-├── beevision/
-│   └── bee_pose_test_result_best.py   ← the full pipeline (PyQt6 GUI + inference)
-│
-├── weights/                           ← place trained .pt model here (download below)
-├── dataset/                           ← training + evaluation data (download below)
-│   ├── training/
-│   └── evaluation/
-│
-├── test_videos/                       ← runnable demo footage (download below)
-│
-├── demo_videos/                       ← short demonstration clips shown in this README
-│   ├── 1.mp4
-│   ├── 2.mp4
-│   ├── 3.mp4
-│   ├── 4.mp4
-│   └── 5.mp4
-│
-└── results/                           ← qualitative outputs from the paper figures
-    ├── Single Bee/
-    ├── Single Bee Qualitative/
-    ├── Multibee/
-    ├── LR RL/
-    ├── RR/
-    ├── LL/
-    ├── Trophallaxis/
-    ├── Head Contact/
-    ├── Thorax Abdomen Contact/
-    ├── Drone Qualitative/
-    └── Full frame Qualitative/
-```
- 
----
+
  
 ## Quick Start
  
