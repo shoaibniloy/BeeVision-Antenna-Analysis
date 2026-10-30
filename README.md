@@ -1,6 +1,10 @@
 # BeeVision
  
-**A Morphology-Guided Two-Stage Pipeline for Real-Time Bilateral Antenna Keypoint Tracking and Behavioral Analysis in Free-Moving Honeybees**
+**A Morphology-Guided Three-Stage Pipeline for Real-Time Bilateral Antenna Keypoint Tracking and Behavioral Analysis in Natural Motion of Markerless Honeybees**
+
+This repository contains the code for the BeeVision paper by Shoaib Ahmmad, Jewel Woodcock and Sulaymon Eshkabilov (Department of Agricultural and Biosystems Engineering, North Dakota State University). The paper describes the method, the evaluation and the behavioral analyses in full, and is available as a preprint on SSRN:
+
+**Paper:** [https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7592577](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7592577)
  
 ---
  
@@ -21,12 +25,12 @@
 
 ---
  
-BeeVision is the first system to achieve real-time bilateral antenna keypoint tracking in free-moving, unmarked honeybees within living observation hives. By combining a custom-trained YOLO11n-pose model for body keypoints with a dedicated morphological refinement stage for antenna localization, BeeVision closes the 89 percentage-point train-deploy gap that has structurally prevented sub-pixel-width antenna tracking in standard heatmap-based pose estimation frameworks.
+BeeVision is the first system to achieve real-time bilateral antenna keypoint tracking in free-moving, unmarked honeybees within living observation hives. By combining a custom-trained YOLO11n-pose model for body keypoints, a dedicated morphological refinement stage for antenna localization and an optical flow layer for temporal continuity, BeeVision closes the 89 percentage-point train-deploy gap that has structurally prevented sub-pixel-width antenna tracking in standard heatmap-based pose estimation frameworks.
  
  
 ## Highlights
  
-| Metric | YOLO-only baseline | BeeVision (two-stage) | Gain |
+| Metric | YOLO-only baseline | BeeVision (three-stage) | Gain |
 |---|---|---|---|
 | Antenna PCK@10 | 10.7% | **92.7%** | +82.0 pp |
 | Antenna RMSE | 29.3 px | **6.7 px** | 4.4× lower |
@@ -35,7 +39,7 @@ BeeVision is the first system to achieve real-time bilateral antenna keypoint tr
 | Bilateral tracking rate | — | **98.9%** | — |
 | Real-time throughput | — | **≥15 fps up to 14 bees** | — |
  
-Evaluated on 2,646 instances spanning workers, queens, and drones. Long-duration stability validated over 60 continuous minutes with 52 unique bees and zero statistical drift in any accuracy or resource metric.
+Evaluated on 2,646 instances spanning workers, queens, and drones. Long-duration stability validated over 60 continuous minutes with 52 unique bees and zero statistical drift in any accuracy or resource metric. The full evaluation is reported in the [paper](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7592577).
  
 ---
  
@@ -55,8 +59,8 @@ BeeVision removes that constraint entirely by enabling continuous, markerless, b
  
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/BeeVision.git
-cd BeeVision
+git clone https://github.com/shoaibniloy/BeeVision-Antenna-Analysis.git
+cd BeeVision-Antenna-Analysis
  
 # 2. Install dependencies
 pip install -r requirements.txt
@@ -64,7 +68,7 @@ pip install -r requirements.txt
 # 3. Download model weights, dataset, and test videos (see Downloads section)
  
 # 4. Run the GUI
-python beevision/bee_pose_test_result_best.py
+python "Antenna Analysis.py"
 ```
  
 In the GUI:
@@ -120,8 +124,10 @@ Expected output on a working install:
 ```
 PyTorch: 2.1.0+cu118 | CUDA: True
 OpenCV: 4.8.1 | ximgproc: True
-Ultralytics: 8.0.196
+Ultralytics: 8.3.235
 ```
+
+YOLO11 models need Ultralytics 8.3.0 or later.
  
 ---
  
@@ -160,7 +166,7 @@ weights/beevision_yolo11n_pose.pt
 ### GUI Mode (default)
  
 ```bash
-python beevision/bee_pose_test_result_best.py
+python "Antenna Analysis.py"
 ```
  
 The GUI exposes nine visualization tabs:
@@ -289,7 +295,7 @@ Identical pipeline parameters track all three colony castes. Performance on the 
 | Queen | Dorsal | 816 | 7.1 px | 90.1% |
 | Drone | Dorsal | 5,345 | 14.1 px | 70.7% |
  
-The drone gap reflects training data volume (202 instances vs. 2,897 worker instances), not morphological dissimilarity — additional drone annotations close the gap directly.
+The drone gap reflects training data volume (202 instances vs. 2,897 worker instances), not morphological dissimilarity — additional drone annotations close the gap directly. Ventral-view results are reported in Table 3 of the paper.
  
 ---
  
@@ -323,16 +329,16 @@ yolo pose train \
  
 ## Reproducing Paper Results
  
-To reproduce the headline numbers in Tables 1, 2, and 3:
+To reproduce the headline numbers in Tables 1, 2, and 3 of the [paper](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7592577):
  
 1. Download the **Evaluation Dataset** (link above) into `dataset/evaluation/`.
 2. Download the trained **Model Weights** into `weights/`.
-3. Launch the GUI: `python beevision/bee_pose_test_result_best.py`.
+3. Launch the GUI: `python "Antenna Analysis.py"`.
 4. Switch to the **Evaluation** tab in the right sidebar.
 5. Click **Select Model** → `weights/beevision_yolo11n_pose.pt`.
 6. Click **Select COCO Annotations** → the `_annotations.coco.json` from the evaluation set.
 7. Click **Select Image Folder** → the matching `images/` directory.
-8. Click **Run** for the YOLO-only baseline, then **Run Full Pipeline** for the two-stage system.
+8. Click **Run** for the YOLO-only baseline, then **Run Full Pipeline** for the three-stage system.
 The Evaluation tab will produce side-by-side PCK curves, per-keypoint RMSE bars, error severity distributions, and downloadable CSVs matching the paper's reported metrics.
  
 Expected results on the worker subset (1,302 instances):
@@ -340,7 +346,7 @@ Expected results on the worker subset (1,302 instances):
 | Configuration | Antenna PCK@10 | Antenna RMSE |
 |---|---|---|
 | YOLO-only | 10.7% | 29.3 px |
-| BeeVision (two-stage) | 92.7% | 6.7 px |
+| BeeVision (three-stage) | 92.7% | 6.7 px |
  
 ---
  
@@ -417,9 +423,9 @@ Performance characteristics on the tested hardware:
  
 ## Limitations
  
-These define the boundary of the current contribution and the roadmap for future work:
+These define the boundary of the current contribution and the roadmap for future work; the paper discusses them in more detail:
  
-1. **Ventral-view performance.** Workers and drones imaged from the ventral side exhibit a consistent 30–40 pp PCK@10 drop because tophat preprocessing parameters were optimized for dorsal contrast geometry. Orientation-aware parameter switching (triggered by the YOLO body axis estimate) is the priority corrective.
+1. **Ventral-view performance.** Workers and drones imaged from the ventral side show lower PCK@10 than in dorsal view (93.7% → 66.8% for workers, 70.7% → 56.2% for drones). The paper attributes this to the small number of ventral-view instances in the training data: YOLO's antenna predictions are less reliable for ventral views, which in turn degrades the left/right antenna assignment. Expanding the ventral training set is the priority corrective.
 2. **Drone localization.** Drone PCK@10 of 70.7% lags worker performance proportional to training data volume (202 vs. 2,897 instances), not morphological dissimilarity. Targeted annotation expansion closes this gap directly.
 3. **Temporal resolution.** The 15 fps pipeline output rate places the Nyquist limit at 7.5 Hz, capturing the lower portion of the 5–15 Hz antenna scanning range. CPU parallelization of Stage 2 is the primary throughput avenue.
 4. **Behavioral metric validation.** The suite of lateralization, regional contact, and trophallaxis metrics requires large-scale ground-truth annotation campaigns to establish population-level norms before clinical deployment as a colony health indicator.
@@ -458,13 +464,29 @@ Some Linux distributions ship with an Ubuntu font that crashes Qt's font system.
  
 ```bash
 export QT_QPA_PLATFORM=offscreen
-python beevision/bee_pose_test_result_best.py
+python "Antenna Analysis.py"
 ```
  
 This will run the inference pipeline without rendering the GUI and is useful for headless evaluation.
  
 ---
  
+## Citation
+
+If you use BeeVision, its dataset or its trained weights in your work, please cite the paper:
+
+```bibtex
+@misc{ahmmad2026beevision,
+  title        = {BeeVision: A Morphology-Guided Three-Stage Pipeline for Real-Time Bilateral Antenna Keypoint Tracking and Behavioral Analysis in Natural Motion of Markerless Honeybees},
+  author       = {Ahmmad, Shoaib and Woodcock, Jewel and Eshkabilov, Sulaymon},
+  year         = {2026},
+  howpublished = {SSRN preprint},
+  url          = {https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7592577}
+}
+```
+
+---
+
 ## Funding
  
 This material is based upon work supported by the **National Science Foundation** under Award No. **2438295**, and partially supported by the **USDA-Agricultural Research Service**, Project Award No. **59-3060-5-001**.
